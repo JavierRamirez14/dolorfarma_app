@@ -101,7 +101,6 @@ if uploaded_file is not None:
         df = pd.merge(consultas, users.rename(columns={'id':'user_id'}), how='left', on='user_id')
         df['fecha'] = pd.to_datetime(df['fecha'])
         df['user_id'] = df['user_id'].astype('object')
-        st.write('¡Hola, mundo!')
         generar_graficos(df)
 else:
     st.write("Por favor, sube una base de datos SQLite para continuar.")
