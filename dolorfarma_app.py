@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 from io import BytesIO
+import tempfile
 
 # Función para extraer datos de una tabla
 def extraer(tabla, conn):
@@ -69,7 +70,13 @@ st.title('Mi Aplicación en Streamlit')
 # Cargar archivo SQLite
 uploaded_file = st.file_uploader("Sube tu base de datos SQLite", type="sqlite3")
 if uploaded_file is not None:
-    conn = sqlite3.connect(uploaded_file)
+    # Guardar el archivo subido en un archivo temporal
+    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+        tmp_file.write(uploaded_file.read())
+        tmp_file_path = tmp_file.name
+
+    # Conectar a la base de datos SQLite usando el archivo temporal
+    conn = sqlite3.connect(tmp_file_path)
     consultas = extraer('main_consulta', conn)
     users = extraer('auth_user', conn)
     users = users[['id', 'username', 'email', 'date_joined']]
