@@ -79,7 +79,7 @@ def generar_graficos(df):
     plt.clf()
 
 # Título de la aplicación
-st.title('Mi Aplicación en Streamlit')
+st.title('DolorFarma')
 
 # Cargar archivo SQLite
 uploaded_file = st.file_uploader("Sube tu base de datos SQLite", type="sqlite3")
